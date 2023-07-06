@@ -1,4 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
+import { Player } from '../Battle/DataStructure/Player';
 
 /**
  * 
@@ -10,14 +11,14 @@ import { _decorator, Component, Node } from 'cc';
 
 export class PlayerMgr
 {
-    private m_stPlayer: Node = null;
+    private m_stPlayer: Player = null;
 
-    public SetPlayer(player: Node): void 
+    public SetPlayer(player: Player): void 
     {
         this.m_stPlayer = player;
     }
 
-    public GetPlayer(): Node 
+    public GetPlayer(): Player 
     {
         return this.m_stPlayer;
     }
