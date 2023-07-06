@@ -1,0 +1,14 @@
+import { _decorator, Component, Node } from 'cc';
+
+/**
+ * 
+ * <%CamelCaseClassName%>
+ * <%Author%>
+ * <%DateTime%>
+ *
+ */
+
+export class <%CamelCaseClassName%>
+{
+    
+}
