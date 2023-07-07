@@ -1,5 +1,4 @@
 import { _decorator, Component, Node } from 'cc';
-import { PlayerMgr } from './PlayerMgr';
 import { GameLogic } from './GameLogic';
 import { Entrance } from './Entrance';
 import { InputMgr } from './InputMgr';
@@ -10,7 +9,6 @@ const { ccclass, property } = _decorator;
 export class Core 
 {
     private static m_pEntrance: Entrance = null;
-    private static m_pPlayerMgr: PlayerMgr = null;
     private static m_pGameLogic: GameLogic = null;
     private static m_pInputMgr: InputMgr = null;
     private static m_pTickMgr: TickMgr = null;
@@ -18,7 +16,6 @@ export class Core
     public static Init(entrance: Entrance): void 
     {
         this.m_pEntrance = entrance;
-        this.m_pPlayerMgr = new PlayerMgr();
         this.m_pGameLogic = new GameLogic();
         this.m_pTickMgr = new TickMgr();
         this.m_pInputMgr = new InputMgr();
@@ -27,10 +24,6 @@ export class Core
     public static get Entrance(): Entrance
     {
         return this.m_pEntrance;
-    }
-    public static get PlayerMgr(): PlayerMgr
-    {
-        return this.m_pPlayerMgr;
     }
     public static get GameLogic(): GameLogic
     {

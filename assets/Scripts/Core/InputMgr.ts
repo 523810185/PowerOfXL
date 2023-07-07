@@ -73,7 +73,7 @@ export class InputMgr implements IUpdate
             return;
         }
 
-        let player = Core.PlayerMgr.GetPlayer();
+        let player = Core.GameLogic.PlayerMgr.GetPlayer();
         let speed = player.Speed;
         var node = player.Node;
         var prePos = node.getPosition();

@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
-import { Player } from '../Battle/DataStructure/Player';
+import { Player } from '../DataStructure/Player';
 
 /**
  * 

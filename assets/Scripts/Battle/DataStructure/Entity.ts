@@ -1,4 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
+import { XLObject } from './XLObject';
 
 /**
  * 
@@ -8,13 +9,17 @@ import { _decorator, Component, Node } from 'cc';
  *
  */
 
-export class Entity
+/**
+ * 所有有生命物体的基类
+ */
+export class Entity extends XLObject
 {
     private m_stNode: Node = null;
-    private m_fSpeed = 0;
+    private m_fSpeed:number = 0;
 
-    public constructor(node: Node) 
+    public constructor(node: Node)
     {
+        super();
         this.m_stNode = node;
     }
 
