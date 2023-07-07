@@ -16,8 +16,8 @@ export class Core
     public static Init(entrance: Entrance): void 
     {
         this.m_pEntrance = entrance;
-        this.m_pGameLogic = new GameLogic();
         this.m_pTickMgr = new TickMgr();
+        this.m_pGameLogic = new GameLogic();
         this.m_pInputMgr = new InputMgr();
     }
 

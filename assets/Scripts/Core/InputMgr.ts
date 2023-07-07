@@ -73,7 +73,8 @@ export class InputMgr implements IUpdate
             return;
         }
 
-        let player = Core.GameLogic.PlayerMgr.GetPlayer();
+        // TODO.. 这里应该反过来，让PlayerMgr在这里注册回调
+        let player = Core.GameLogic.BattleMgr.PlayerMgr.GetPlayer();
         let speed = player.Speed;
         var node = player.Node;
         var prePos = node.getPosition();

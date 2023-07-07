@@ -13,15 +13,17 @@ import { Entity } from '../../Entity';
 export class FireRing extends Weapon
 {
     private m_fRadius: number = 0;
-    public constructor(node: Node, follower: Entity, radius: number)
+    private m_fAngleSpeed: number = 0;
+    public constructor(node: Node, follower: Entity, radius: number = 200, angleSpeed: number = 60)
     {
         super(node, follower);
         this.m_fRadius = radius;
+        this.m_fAngleSpeed = angleSpeed;
     }
     
     public OnUpdateImp(dt: number): void 
     {
-        var angle = this.m_fNowTime % 360;
+        var angle = this.m_fNowTime * this.m_fAngleSpeed % 360;
         if(this.m_stFollwer != null && this.m_stSelfNode != null) 
         {
             var _radians = angle / 180 * Math.PI;

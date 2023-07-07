@@ -1,8 +1,8 @@
 import { _decorator, Component, find, instantiate, Node } from 'cc';
 import { Core } from './Core';
 import { Player } from '../Battle/DataStructure/Player';
-import { PlayerMgr } from '../Battle/Mgr/PlayerMgr';
-import { EntityMgr } from '../Battle/Mgr/EntityMgr';
+import { BattleMgr } from '../Battle/BattleMgr';
+import { FireRing } from '../Battle/DataStructure/Derived/Weapon/FireRing';
 
 /**
  * 
@@ -19,29 +19,28 @@ export class GameLogic
         this.Init();
     }
 
-    private m_pPlayerMgr: PlayerMgr = null;
-    private m_pEntityMgr: EntityMgr = null;
+    private m_pBattleMgr: BattleMgr = null;
 
     private Init(): void 
     {
         // Mgr
-        this.m_pEntityMgr = new EntityMgr();
-        this.m_pPlayerMgr = new PlayerMgr();
+        this.m_pBattleMgr = new BattleMgr();
         // 临时逻辑
         let playerNode = instantiate(Core.Entrance.playerPrefab);
         playerNode.setParent(find("Canvas"));
         let player = new Player(playerNode);
         player.Speed = 100;
-        this.m_pPlayerMgr.SetPlayer(player); 
-        this.m_pEntityMgr.AddEntity(player);
+        this.m_pBattleMgr.PlayerMgr.SetPlayer(player); 
+        this.m_pBattleMgr.EntityMgr.AddEntity(player);
+        var fireRingNode = instantiate(Core.Entrance.fireRingPerfab);
+        fireRingNode.setParent(find("Canvas"));
+        let weapon = new FireRing(fireRingNode, player, 200, 60);
+        this.m_pBattleMgr.WeaponMgr.AddWeapon(weapon);
     }
 
-    public get PlayerMgr(): PlayerMgr
+    public get BattleMgr(): BattleMgr
     {
-        return this.m_pPlayerMgr;
+        return this.m_pBattleMgr;
     }
-    public get EntityMgr(): EntityMgr
-    {
-        return this.m_pEntityMgr;
-    }
+
 }

@@ -8,6 +8,9 @@ export class Entrance extends Component
     @property(Prefab)
     playerPrefab: Prefab = null;
 
+    @property(Prefab)
+    fireRingPerfab: Prefab = null;
+
     start() 
     {
         Core.Init(this);

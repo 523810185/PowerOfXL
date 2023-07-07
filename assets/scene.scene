@@ -140,6 +140,10 @@
       "__uuid__": "f19b642c-84f5-4864-93aa-d8dcf6f20735",
       "__expectedType__": "cc.Prefab"
     },
+    "fireRingPerfab": {
+      "__uuid__": "1aad7323-96a4-41a9-b411-193ca5cae2b7",
+      "__expectedType__": "cc.Prefab"
+    },
     "_id": "11VAG0S6tLHr2Y1PBrC1wd"
   },
   {
