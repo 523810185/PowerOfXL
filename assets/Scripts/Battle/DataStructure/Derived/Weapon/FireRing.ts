@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, Vec3 } from 'cc';
 import { Weapon } from '../../Weapon';
 import { Entity } from '../../Entity';
+import { Core } from '../../../../Core/Core';
 
 /**
  * 
@@ -31,6 +32,12 @@ export class FireRing extends Weapon
             var _cos = Math.cos(_radians);
             var newPos = this.m_stFollwer.Node.getWorldPosition().add(new Vec3(_sin, _cos, 0).multiplyScalar(this.m_fRadius));
             this.m_stSelfNode.setWorldPosition(newPos);
+
+            // 伤害
+            var mgr = Core.GameLogic.BattleMgr.EntityMgr;
+            mgr.QueryEnemyInRadius(newPos, this.m_stFollwer.CampType, 60, _entity => {
+                mgr.EntityApplyDmg(_entity.Guid, this.m_stFollwer.Guid, 30);
+            });
         }
     }
     

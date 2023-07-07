@@ -3,6 +3,7 @@ import { Core } from './Core';
 import { Player } from '../Battle/DataStructure/Player';
 import { BattleMgr } from '../Battle/BattleMgr';
 import { FireRing } from '../Battle/DataStructure/Derived/Weapon/FireRing';
+import { CampType, Entity } from '../Battle/DataStructure/Entity';
 
 /**
  * 
@@ -26,16 +27,26 @@ export class GameLogic
         // Mgr
         this.m_pBattleMgr = new BattleMgr();
         // 临时逻辑
+        // player
         let playerNode = instantiate(Core.Entrance.playerPrefab);
         playerNode.setParent(find("Canvas"));
         let player = new Player(playerNode);
         player.Speed = 100;
+        player.CampType = CampType.Player;
         this.m_pBattleMgr.PlayerMgr.SetPlayer(player); 
         this.m_pBattleMgr.EntityMgr.AddEntity(player);
+        // weapon
         var fireRingNode = instantiate(Core.Entrance.fireRingPerfab);
         fireRingNode.setParent(find("Canvas"));
         let weapon = new FireRing(fireRingNode, player, 200, 60);
         this.m_pBattleMgr.WeaponMgr.AddWeapon(weapon);
+        // monster
+        var monsterNode = instantiate(Core.Entrance.playerPrefab);
+        monsterNode.setParent(find("Canvas"));
+        var monster = new Entity(monsterNode);
+        monster.CampType = CampType.Enemy;
+        this.m_pBattleMgr.EntityMgr.AddEntity(monster);
+        monster.NowHP = 10000;
     }
 
     public get BattleMgr(): BattleMgr
