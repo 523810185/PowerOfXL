@@ -2,6 +2,7 @@ import { _decorator, Component, Node } from 'cc';
 import { PlayerMgr } from './Mgr/PlayerMgr';
 import { EntityMgr } from './Mgr/EntityMgr';
 import { WeaponMgr } from './Mgr/WeaponMgr';
+import { MonsterMgr } from './Mgr/MonsterMgr';
 
 /**
  * 
@@ -16,6 +17,7 @@ export class BattleMgr
     private m_pPlayerMgr: PlayerMgr = null;
     private m_pEntityMgr: EntityMgr = null;
     private m_pWeaponMgr: WeaponMgr = null;
+    private m_pMonsterMgr: MonsterMgr = null;
 
     public constructor()
     {
@@ -27,6 +29,7 @@ export class BattleMgr
         this.m_pEntityMgr = new EntityMgr();
         this.m_pPlayerMgr = new PlayerMgr();
         this.m_pWeaponMgr = new WeaponMgr();
+        this.m_pMonsterMgr = new MonsterMgr();
     }
 
     public get PlayerMgr(): PlayerMgr
@@ -40,5 +43,9 @@ export class BattleMgr
     public get WeaponMgr(): WeaponMgr
     {
         return this.m_pWeaponMgr;
+    }
+    public get MonsterMgr(): MonsterMgr
+    {
+        return this.m_pMonsterMgr;
     }
 }

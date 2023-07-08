@@ -1,6 +1,8 @@
 import { _decorator, Component, Node } from 'cc';
 import { XLObject } from './XLObject';
 import { Entity } from './Entity';
+import { Core } from '../../Core/Core';
+import { EventID, WeaponDieMsg } from '../../Core/EventID';
 
 /**
  * 
@@ -34,5 +36,11 @@ export abstract class Weapon extends XLObject
         this.OnUpdateImp(dt);
     }
 
-    public abstract OnUpdateImp(dt: number): void;
+    protected abstract OnUpdateImp(dt: number): void;
+
+    protected Die(): void 
+    {
+        this.m_stSelfNode.destroy();
+        Core.EventMgr.Emit(EventID.WEAPON_DIE, new WeaponDieMsg(this.Guid));
+    }
 }

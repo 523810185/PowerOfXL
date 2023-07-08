@@ -1,5 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
-import { Entity } from './Entity';
+import { CampType, Entity } from './Entity';
 
 /**
  * 
@@ -11,5 +11,9 @@ import { Entity } from './Entity';
 
 export class Player extends Entity
 {
-    
+    public constructor(node: Node) 
+    {
+        super(node);
+        this.CampType = CampType.Player;
+    }
 }

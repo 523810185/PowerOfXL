@@ -11,8 +11,12 @@ export class NewComponent extends Component {
     speed = 0;
 
     start() {
-        console.log(" start ! ");
-        input.on(Input.EventType.KEY_PRESSING, this.OnKeyDown, this);
+        var a = new Vec3(1, 2, 3);
+        var b = a.subtract(new Vec3(1, 1, 1));
+        console.log(" a = " + a);
+        console.log(" b = " + b);
+        // console.log(" start ! ");
+        // input.on(Input.EventType.KEY_PRESSING, this.OnKeyDown, this);
     }
 
     OnKeyDown(e : EventKeyboard) {

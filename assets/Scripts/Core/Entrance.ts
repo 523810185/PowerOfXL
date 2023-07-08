@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, Prefab } from 'cc';
 import { Core } from './Core';
+import { TestDemo } from '../Test/TestDemo';
 const { ccclass, property } = _decorator;
 
 @ccclass('Entrance')
@@ -11,9 +12,17 @@ export class Entrance extends Component
     @property(Prefab)
     fireRingPerfab: Prefab = null;
 
+    @property(Prefab)
+    monsterPerfab: Prefab = null;
+
+    @property(Prefab)
+    straightBulletPerfab: Prefab = null;
+
     start() 
     {
         Core.Init(this);
+        // 临时逻辑
+        new TestDemo();
     }
 
     update(deltaTime: number) 

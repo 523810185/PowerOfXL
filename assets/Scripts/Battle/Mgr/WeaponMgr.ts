@@ -2,6 +2,8 @@ import { _decorator, Component, Node } from 'cc';
 import { Weapon } from '../DataStructure/Weapon';
 import { IUpdate } from '../../Core/TickMgr';
 import { Core } from '../../Core/Core';
+import { EventID, WeaponDieMsg } from '../../Core/EventID';
+import { EventMsg } from '../../Core/EventMgr';
 
 /**
  * 
@@ -24,6 +26,7 @@ export class WeaponMgr implements IUpdate
     {
         this.m_mapWeaponMap = new Map<string, Weapon>();
         Core.TickMgr.BindTick(this);
+        this.BindEvent();
     }
 
     public AddWeapon(weapon: Weapon): void
@@ -37,14 +40,20 @@ export class WeaponMgr implements IUpdate
         this.m_mapWeaponMap.set(weapon.Guid, weapon);
     }
 
+    public RemoveWeaponByGuid(guid: string): void
+    {
+        if(guid != null && this.m_mapWeaponMap.has(guid))
+        {
+            this.m_mapWeaponMap.delete(guid);
+        }
+    }
+
     public RemoveWeapon(weapon: Weapon): void 
     {
-        if(weapon == null || !this.m_mapWeaponMap.has(weapon.Guid))
+        if(weapon != null) 
         {
-            return;
+            this.RemoveWeaponByGuid(weapon.Guid);
         }
-
-        this.m_mapWeaponMap.delete(weapon.Guid);
     }
 
     public Update(dt: number): void 
@@ -53,4 +62,14 @@ export class WeaponMgr implements IUpdate
             weapon.OnUpdate(dt);
         });
     }
+
+    //#region 内部方法
+    private BindEvent(): void 
+    {
+        Core.EventMgr.BindEvent(EventID.WEAPON_DIE, (data: EventMsg) => {
+            var info = data as WeaponDieMsg;
+            this.RemoveWeaponByGuid(info.guid);
+        }, this);
+    }
+    //#endregion 内部方法
 }

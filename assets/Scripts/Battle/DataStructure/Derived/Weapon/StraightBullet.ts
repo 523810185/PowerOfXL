@@ -2,36 +2,31 @@ import { _decorator, Component, Node, Vec3 } from 'cc';
 import { Weapon } from '../../Weapon';
 import { Entity } from '../../Entity';
 import { Core } from '../../../../Core/Core';
-import { MathUtil } from '../../../../Common/Util/MathUtil';
 
 /**
  * 
- * FireRing
+ * StraightBullet
  * zstuzzy
- * Fri Jul 07 2023 13:19:36 GMT+0800 (中国标准时间)
+ * Sat Jul 08 2023 22:51:44 GMT+0800 (GMT+08:00)
  *
  */
 
-export class FireRing extends Weapon
+export class StraightBullet extends Weapon
 {
-    private m_fRadius: number = 0;
-    private m_fAngleSpeed: number = 0;
+    private m_stMoveVec: Vec3;
     private m_fDmg: number = 0;
+    private m_fLifeTime: number = 0;
     private m_mapDmgTimeRecorder: Map<Entity, number> = new Map<Entity, number>();
     public constructor(node: Node, follower: Entity)
     {
         super(node, follower);
     }
-    
+
     protected OnUpdateImp(dt: number): void 
     {
-        var angle = this.m_fNowTime * this.m_fAngleSpeed % 360;
         if(this.m_stFollwer != null && this.m_stSelfNode != null) 
         {
-            var _radians = MathUtil.AngleToRadians(angle);
-            var _sin = Math.sin(_radians);
-            var _cos = Math.cos(_radians);
-            var newPos = this.m_stFollwer.Node.getWorldPosition().add(new Vec3(_sin, _cos, 0).multiplyScalar(this.m_fRadius));
+            var newPos = this.m_stSelfNode.getWorldPosition().add(this.m_stMoveVec.clone().multiplyScalar(dt));
             this.m_stSelfNode.setWorldPosition(newPos);
 
             // 伤害CD
@@ -49,25 +44,30 @@ export class FireRing extends Weapon
                 if(this.m_mapDmgTimeRecorder.get(_entity) <= 0) 
                 {
                     mgr.EntityApplyDmg(_entity.Guid, this.m_stFollwer.Guid, this.m_fDmg);
-                    this.m_mapDmgTimeRecorder.set(_entity, 0.3); // 临时写死伤害CD
+                    this.m_mapDmgTimeRecorder.set(_entity, 0.5); // 临时写死伤害CD
                 }
             });
         }
-    }
 
-    public set Radius(val: number)
-    {
-        this.m_fRadius = val;
-    }
-
-    public set AngleSpeed(val: number)
-    {
-        this.m_fAngleSpeed = val;
+        if(this.m_fNowTime >= this.m_fLifeTime) 
+        {
+            this.Die();
+        }
     }
 
     public set Dmg(val: number)
     {
         this.m_fDmg = val;
     }
-    
+
+    public set MoveVec(val: Vec3)
+    {
+        this.m_stMoveVec = val;
+        this.m_stMoveVec.z = 0;
+    }
+
+    public set LifeTime(val: number)
+    {
+        this.m_fLifeTime = val;
+    }
 }
