@@ -56,6 +56,16 @@ export class WeaponMgr implements IUpdate
         }
     }
 
+    public Traverse(cb: (weapon: Weapon) => void): void
+    {
+        if(cb != null) 
+        {
+            this.m_mapWeaponMap.forEach(weapon => {
+                cb(weapon);
+            });
+        }
+    }
+
     public Update(dt: number): void 
     {
         this.m_mapWeaponMap.forEach(weapon => {

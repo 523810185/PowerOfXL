@@ -3,6 +3,7 @@ import { PlayerMgr } from './Mgr/PlayerMgr';
 import { EntityMgr } from './Mgr/EntityMgr';
 import { WeaponMgr } from './Mgr/WeaponMgr';
 import { MonsterMgr } from './Mgr/MonsterMgr';
+import { WeaponSelectMgr } from './Mgr/WeaponSelectMgr';
 
 /**
  * 
@@ -18,6 +19,7 @@ export class BattleMgr
     private m_pEntityMgr: EntityMgr = null;
     private m_pWeaponMgr: WeaponMgr = null;
     private m_pMonsterMgr: MonsterMgr = null;
+    private m_pWeaponSelectMgr: WeaponSelectMgr = null;
 
     public constructor()
     {
@@ -30,6 +32,7 @@ export class BattleMgr
         this.m_pPlayerMgr = new PlayerMgr();
         this.m_pWeaponMgr = new WeaponMgr();
         this.m_pMonsterMgr = new MonsterMgr();
+        this.m_pWeaponSelectMgr = new WeaponSelectMgr();
     }
 
     public get PlayerMgr(): PlayerMgr
@@ -47,5 +50,9 @@ export class BattleMgr
     public get MonsterMgr(): MonsterMgr
     {
         return this.m_pMonsterMgr;
+    }
+    public get WeaponSelectMgr(): WeaponSelectMgr
+    {
+        return this.m_pWeaponSelectMgr;
     }
 }

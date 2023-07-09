@@ -14,50 +14,55 @@ import { MathUtil } from '../../../../Common/Util/MathUtil';
 
 export class FireRing extends Weapon
 {
-    private m_fRadius: number = 0;
+    private m_fRotateRadius: number = 0;
     private m_fAngleSpeed: number = 0;
     private m_fDmg: number = 0;
-    private m_mapDmgTimeRecorder: Map<Entity, number> = new Map<Entity, number>();
+    private m_mapDmgRecorder: Set<Entity> = new Set<Entity>();
+    private m_fRotAngle: number = 0;
     public constructor(node: Node, follower: Entity)
     {
         super(node, follower);
+        this.m_fRotAngle = 0;
+        this.ClearDmgRecorder();
     }
     
     protected OnUpdateImp(dt: number): void 
     {
-        var angle = this.m_fNowTime * this.m_fAngleSpeed % 360;
+        this.m_fRotAngle += dt * this.m_fAngleSpeed;
+        if(this.m_fRotAngle >= 360) 
+        {
+            this.m_fRotAngle %= 360;
+            this.ClearDmgRecorder();
+        }
+        var angle = this.m_fRotAngle;
         if(this.m_stFollwer != null && this.m_stSelfNode != null) 
         {
             var _radians = MathUtil.AngleToRadians(angle);
             var _sin = Math.sin(_radians);
             var _cos = Math.cos(_radians);
-            var newPos = this.m_stFollwer.Node.getWorldPosition().add(new Vec3(_sin, _cos, 0).multiplyScalar(this.m_fRadius));
+            var newPos = this.m_stFollwer.Node.getWorldPosition().add(new Vec3(_sin, _cos, 0).multiplyScalar(this.m_fRotateRadius));
             this.m_stSelfNode.setWorldPosition(newPos);
 
-            // 伤害CD
-            this.m_mapDmgTimeRecorder.forEach((lastVal: number, entity: Entity) => {
-                this.m_mapDmgTimeRecorder.set(entity, lastVal - dt);
-            });
             // 伤害
             var mgr = Core.GameLogic.BattleMgr.EntityMgr;
             mgr.QueryEnemyInRadius(newPos, this.m_stFollwer.CampType, 60/*写死了伤害判定半径*/, _entity => {
-                if(!this.m_mapDmgTimeRecorder.has(_entity))
+                if(!this.m_mapDmgRecorder.has(_entity))
                 {
-                    this.m_mapDmgTimeRecorder.set(_entity, 0);
-                }
-
-                if(this.m_mapDmgTimeRecorder.get(_entity) <= 0) 
-                {
+                    this.m_mapDmgRecorder.add(_entity);
                     mgr.EntityApplyDmg(_entity.Guid, this.m_stFollwer.Guid, this.m_fDmg);
-                    this.m_mapDmgTimeRecorder.set(_entity, 0.3); // 临时写死伤害CD
                 }
             });
         }
     }
 
-    public set Radius(val: number)
+    private ClearDmgRecorder(): void 
     {
-        this.m_fRadius = val;
+        this.m_mapDmgRecorder.clear();
+    }
+
+    public set RotateRadius(val: number)
+    {
+        this.m_fRotateRadius = val;
     }
 
     public set AngleSpeed(val: number)
@@ -65,9 +70,15 @@ export class FireRing extends Weapon
         this.m_fAngleSpeed = val;
     }
 
+    public get Dmg(): number
+    {
+        return this.m_fDmg;
+    }
+
     public set Dmg(val: number)
     {
         this.m_fDmg = val;
+        console.log("zzy dmg = " + val);
     }
     
 }

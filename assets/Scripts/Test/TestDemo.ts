@@ -40,9 +40,10 @@ export class TestDemo implements IUpdate
 
     private Init(): void 
     {
+        var objectLayer = find("Canvas/ObjectLayer");
         // player
         let playerNode = instantiate(Core.Entrance.playerPrefab);
-        playerNode.setParent(find("Canvas"));
+        playerNode.setParent(objectLayer);
         let player = new Player(playerNode);
         player.Speed = 100;
         player.NowHP = 100;
@@ -50,23 +51,24 @@ export class TestDemo implements IUpdate
         Core.GameLogic.BattleMgr.EntityMgr.AddEntity(player);
         // weapon
         var fireRingNode = instantiate(Core.Entrance.fireRingPerfab);
-        fireRingNode.setParent(find("Canvas"));
+        fireRingNode.setParent(objectLayer);
         let weapon = new FireRing(fireRingNode, player);
-        weapon.Radius = 200;
+        weapon.RotateRadius = 200;
         weapon.AngleSpeed = 270;
         weapon.Dmg = 100;
         Core.GameLogic.BattleMgr.WeaponMgr.AddWeapon(weapon);
 
         var bulletEmitterNode = instantiate(Core.Entrance.straightBulletPerfab);
-        bulletEmitterNode.setParent(find("Canvas"));
+        bulletEmitterNode.setParent(objectLayer);
         let bulletEmitter = new StraightBulletEmitter(bulletEmitterNode, player);
         Core.GameLogic.BattleMgr.WeaponMgr.AddWeapon(bulletEmitter);
     }
 
     private CreateMonster(): void 
     {
+        var objectLayer = find("Canvas/ObjectLayer");
         var monsterNode = instantiate(Core.Entrance.monsterPerfab);
-        monsterNode.setParent(find("Canvas"));
+        monsterNode.setParent(objectLayer);
         var monster = new Monster(monsterNode);
         monster.AI = new NormalAI(monster);
         Core.GameLogic.BattleMgr.EntityMgr.AddEntity(monster);

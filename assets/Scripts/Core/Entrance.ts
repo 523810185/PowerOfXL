@@ -18,6 +18,9 @@ export class Entrance extends Component
     @property(Prefab)
     straightBulletPerfab: Prefab = null;
 
+    @property(Prefab)
+    selectWeaponPrefab: Prefab = null;
+
     start() 
     {
         Core.Init(this);

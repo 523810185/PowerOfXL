@@ -17,6 +17,8 @@ export enum EventID
     ENTITY_DIE = 2,
     /**武器消失 */
     WEAPON_DIE = 3,
+    /**主角升级 */
+    PLAYER_LV_UP = 4,
 }
 
 export class EntityApplyDmgData extends EventMsg
@@ -50,5 +52,13 @@ export class WeaponDieMsg extends EventMsg
     {
         super();
         this.guid = guid;
+    }
+}
+
+export class PlayerLVUpMsg extends EventMsg 
+{
+    public constructor()
+    {
+        super();
     }
 }
