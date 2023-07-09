@@ -36,7 +36,6 @@ export class WeaponMgr implements IUpdate
             return;
         }
         
-        console.log("武器被添加: " + weapon.Guid);
         this.m_mapWeaponMap.set(weapon.Guid, weapon);
     }
 

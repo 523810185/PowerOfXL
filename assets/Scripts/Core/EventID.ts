@@ -12,13 +12,15 @@ import { EventMsg } from './EventMgr';
 export enum EventID
 {
     /**单位收到伤害 */
-    ENTITY_APPLY_DMG = 1,
+    ENTITY_APPLY_DMG,
     /**单位死亡 */
-    ENTITY_DIE = 2,
+    ENTITY_DIE,
+    /**怪物死亡 */
+    MONSTER_DIE,
     /**武器消失 */
-    WEAPON_DIE = 3,
+    WEAPON_DIE,
     /**主角升级 */
-    PLAYER_LV_UP = 4,
+    PLAYER_LV_UP,
 }
 
 export class EntityApplyDmgData extends EventMsg
@@ -36,6 +38,16 @@ export class EntityApplyDmgData extends EventMsg
 }
 
 export class EntityDieMsg extends EventMsg
+{
+    public guid: string = null;
+    public constructor(guid: string)
+    {
+        super();
+        this.guid = guid;
+    }
+}
+
+export class MonsterDieMsg extends EventMsg
 {
     public guid: string = null;
     public constructor(guid: string)

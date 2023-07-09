@@ -4,6 +4,7 @@ import { EventID } from '../../Core/EventID';
 import { IUpdate } from '../../Core/TickMgr';
 import { FireRingDmgUpper } from '../DataStructure/Derived/WeaponSelect/FireRingDmgUpper';
 import { WeaponSelect } from '../DataStructure/WeaponSelect';
+import { WeaponSelectItemPool } from '../Misc/WeaponSelectItemPool';
 
 /**
  * 
@@ -19,6 +20,7 @@ export class WeaponSelectMgr implements IUpdate
     private m_fLastTimeScale = 1;
     private m_stUIRootNode: Node = null;
     private m_bOnSelect: boolean = false;
+    private m_stWeaponSelectItemPool: WeaponSelectItemPool = null;
     public constructor()
     {
         this.Init();
@@ -31,6 +33,7 @@ export class WeaponSelectMgr implements IUpdate
         this.m_stUIRootNode = new Node("SelectWeaponUIRoot");
         this.m_stUIRootNode.setParent(find("Canvas/TopUILayer"));
         this.m_stUIRootNode.setPosition(0, 0, 1); // z高一点，显示在上面
+        this.m_stWeaponSelectItemPool = new WeaponSelectItemPool();
     }
 
     private BindEvent(): void 
@@ -90,7 +93,7 @@ export class WeaponSelectMgr implements IUpdate
             step += dis;
 
             // 临时代码
-            let weaponSelectData = new FireRingDmgUpper(randomRangeInt(30, 60));
+            let weaponSelectData = this.m_stWeaponSelectItemPool.GetOneItem();
             
             let title = child.getChildByName("title");
             title.getComponent(Label).string = weaponSelectData.Title();

@@ -148,8 +148,16 @@ export class Entity extends XLObject
     //#region 内部方法
     private Die(): void 
     {
-        this.m_stNode?.destroy();
         Core.EventMgr.Emit(EventID.ENTITY_DIE, new EntityDieMsg(this.Guid));
+        this.OnDie();
+        this.m_stNode?.destroy();
     }
     //#endregion 内部方法
+
+    //#region 可供子类覆盖的方法
+    protected OnDie(): void 
+    {
+
+    }
+    //#endregion 可供子类覆盖的方法
 }

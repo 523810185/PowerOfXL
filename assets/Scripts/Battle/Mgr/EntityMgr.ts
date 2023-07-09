@@ -29,7 +29,6 @@ export class EntityMgr
             return;
         }
         
-        console.log("单位被添加: " + entity.Guid);
         this.m_mapEntityMap.set(entity.Guid, entity);
     }
 
@@ -65,7 +64,6 @@ export class EntityMgr
         if(entity != null) 
         {
             entity.ApplyDmg(dmg);
-            console.log(entity.Guid + " .. " + entity.NowHP);
             Core.EventMgr.Emit(EventID.ENTITY_APPLY_DMG, new EntityApplyDmgData(targetGuid, sourceGuid, dmg));
         }
     }

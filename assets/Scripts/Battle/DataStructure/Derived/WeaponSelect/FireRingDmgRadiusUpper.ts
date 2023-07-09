@@ -10,27 +10,27 @@ import { FireRing } from '../Weapon/FireRing';
  *
  */
 
-export class FireRingDmgUpper extends WeaponSelect
+export class FireRingDmgRadiusUpper extends WeaponSelect
 {
-    private m_iDmgUp: number = 0;
-    public constructor(dmgUp: number)
+    private m_iUpVal: number = 0;
+    public constructor(upVal: number)
     {
         super();
-        this.m_iDmgUp = dmgUp;
+        this.m_iUpVal = upVal;
     }
 
     public Title(): string {
-        return "旋火轮伤害增加"
+        return "旋火轮伤害半径增加"
     }
     public Content(): string {
-        return "伤害增加" + this.m_iDmgUp;
+        return "伤害半径增加" + this.m_iUpVal;
     }
 
     public OnSelect(): void 
     {
         this.TraverseWeaponOfFilter(weapon => {
             var fr = weapon as FireRing;
-            fr.Dmg += this.m_iDmgUp;
+            fr.DmgRadius += this.m_iUpVal;
         }, weapon => {
             return weapon instanceof FireRing;
         });

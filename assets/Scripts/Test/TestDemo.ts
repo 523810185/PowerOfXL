@@ -54,13 +54,17 @@ export class TestDemo implements IUpdate
         fireRingNode.setParent(objectLayer);
         let weapon = new FireRing(fireRingNode, player);
         weapon.RotateRadius = 200;
-        weapon.AngleSpeed = 270;
+        weapon.AngleSpeed = 120;
         weapon.Dmg = 100;
+        weapon.DmgRadius = 25;
         Core.GameLogic.BattleMgr.WeaponMgr.AddWeapon(weapon);
 
         var bulletEmitterNode = instantiate(Core.Entrance.straightBulletPerfab);
         bulletEmitterNode.setParent(objectLayer);
         let bulletEmitter = new StraightBulletEmitter(bulletEmitterNode, player);
+        bulletEmitter.Dmg = 100;
+        bulletEmitter.EmitCnt = 4;
+        bulletEmitter.EmitDuration = 2;
         Core.GameLogic.BattleMgr.WeaponMgr.AddWeapon(bulletEmitter);
     }
 

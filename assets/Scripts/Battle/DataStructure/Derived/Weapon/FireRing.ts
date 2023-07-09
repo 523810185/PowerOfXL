@@ -1,4 +1,4 @@
-import { _decorator, Component, Node, Vec3 } from 'cc';
+import { _decorator, Component, Node, UITransform, Vec2, Vec3 } from 'cc';
 import { Weapon } from '../../Weapon';
 import { Entity } from '../../Entity';
 import { Core } from '../../../../Core/Core';
@@ -17,13 +17,16 @@ export class FireRing extends Weapon
     private m_fRotateRadius: number = 0;
     private m_fAngleSpeed: number = 0;
     private m_fDmg: number = 0;
-    private m_mapDmgRecorder: Set<Entity> = new Set<Entity>();
     private m_fRotAngle: number = 0;
+    private m_fDmgRadius: number = 0;
+    private m_mapDmgRecorder: Set<Entity> = new Set<Entity>();
+    private m_stUITranCom: UITransform = null;
     public constructor(node: Node, follower: Entity)
     {
         super(node, follower);
         this.m_fRotAngle = 0;
         this.ClearDmgRecorder();
+        this.m_stUITranCom = node?.getComponent(UITransform);
     }
     
     protected OnUpdateImp(dt: number): void 
@@ -45,7 +48,7 @@ export class FireRing extends Weapon
 
             // 伤害
             var mgr = Core.GameLogic.BattleMgr.EntityMgr;
-            mgr.QueryEnemyInRadius(newPos, this.m_stFollwer.CampType, 60/*写死了伤害判定半径*/, _entity => {
+            mgr.QueryEnemyInRadius(newPos, this.m_stFollwer.CampType, this.m_fDmgRadius, _entity => {
                 if(!this.m_mapDmgRecorder.has(_entity))
                 {
                     this.m_mapDmgRecorder.add(_entity);
@@ -65,6 +68,11 @@ export class FireRing extends Weapon
         this.m_fRotateRadius = val;
     }
 
+    public get AngleSpeed(): number 
+    {
+        return this.m_fAngleSpeed;
+    }
+
     public set AngleSpeed(val: number)
     {
         this.m_fAngleSpeed = val;
@@ -78,7 +86,21 @@ export class FireRing extends Weapon
     public set Dmg(val: number)
     {
         this.m_fDmg = val;
-        console.log("zzy dmg = " + val);
+    }
+
+    public get DmgRadius(): number
+    {
+        return this.m_fDmgRadius;
+    }
+
+    public set DmgRadius(val: number) 
+    {
+        this.m_fDmgRadius = val;
+        if(this.m_stUITranCom != null) 
+        {
+            this.m_stUITranCom.width = val * 2;
+            this.m_stUITranCom.height = val * 2;
+        }
     }
     
 }

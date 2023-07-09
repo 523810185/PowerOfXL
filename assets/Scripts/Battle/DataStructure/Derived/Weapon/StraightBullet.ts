@@ -60,6 +60,11 @@ export class StraightBullet extends Weapon
         this.m_fDmg = val;
     }
 
+    public get Dmg(): number
+    {
+        return this.m_fDmg;
+    }
+
     public set MoveVec(val: Vec3)
     {
         this.m_stMoveVec = val;

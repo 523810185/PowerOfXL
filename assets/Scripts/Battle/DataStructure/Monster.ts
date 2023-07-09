@@ -2,6 +2,8 @@ import { _decorator, Component, Node } from 'cc';
 import { CampType, Entity } from './Entity';
 import { AI } from './AI';
 import { IUpdate } from '../../Core/TickMgr';
+import { Core } from '../../Core/Core';
+import { EventID, MonsterDieMsg } from '../../Core/EventID';
 
 /**
  * 
@@ -37,8 +39,17 @@ export class Monster extends Entity
         this.OnUpdateImp(dt);
     }
 
+    //#region 可供子类覆盖的方法
     protected OnUpdateImp(dt: number): void
     {
 
     }
+    //#endregion 可供子类覆盖的方法
+
+    //#region 覆盖父类的方法
+    protected override OnDie(): void 
+    {
+        Core.EventMgr.Emit(EventID.MONSTER_DIE, new MonsterDieMsg(this.Guid));
+    }
+    //#endregion 覆盖父类的方法
 }

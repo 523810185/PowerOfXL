@@ -1,5 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { CampType, Entity } from './Entity';
+import { Core } from '../../Core/Core';
+import { EventID, MonsterDieMsg } from '../../Core/EventID';
 
 /**
  * 
@@ -20,8 +22,28 @@ export class Player extends Entity
         super(node);
         this.CampType = CampType.Player;
         this.m_iLV = 1;
-        this.OnLVChange();
+        this.m_iNowExp = 0;
+        this.m_iMaxExp = this.m_iLV * 100; // 先写死
+        // this.OnLVChange();
+        this.BindEvent();
     }
+
+    //#region 属性get&set
+    public get LV(): number
+    {
+        return this.m_iLV;
+    }
+
+    public get NowExp(): number
+    {
+        return this.m_iNowExp;
+    }
+
+    public get MaxExp(): number
+    {
+        return this.m_iMaxExp;
+    }
+    //#endregion 属性get&set
 
     public GainExp(exp: number): void 
     {
@@ -39,6 +61,14 @@ export class Player extends Entity
 
     protected OnLVChange(): void 
     {
-        this.m_iMaxExp = this.m_iLV * 100;
+        this.m_iMaxExp = this.m_iLV * 100; // 先写死
+        Core.EventMgr.Emit(EventID.PLAYER_LV_UP, null);
+    }
+
+    private BindEvent(): void 
+    {
+        Core.EventMgr.BindEvent(EventID.MONSTER_DIE, data => {
+            this.GainExp(20);
+        }, this);
     }
 }

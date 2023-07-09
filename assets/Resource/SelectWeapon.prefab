@@ -264,7 +264,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 180,
-      "height": 50.4
+      "height": 90.39999999999999
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -298,14 +298,14 @@
       "b": 0,
       "a": 255
     },
-    "_string": "这是一个标题",
+    "_string": "这是一个标题这是一个标题",
     "_horizontalAlign": 1,
     "_verticalAlign": 1,
     "_actualFontSize": 30,
     "_fontSize": 30,
     "_fontFamily": "Arial",
     "_lineHeight": 40,
-    "_overflow": 0,
+    "_overflow": 3,
     "_enableWrapText": true,
     "_font": null,
     "_isSystemFontUsed": true,
